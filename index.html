@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏎️ Rushed Engine Server Portal</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #0b0c10; color: #c5c6c7; line-height: 1.6; padding: 40px 20px; text-align: center; }
+        .container { max-width: 700px; margin: 0 auto; background: #1f2833; padding: 40px; border-radius: 12px; border: 2px solid #66fcf1; box-shadow: 0 8px 30px rgba(0, 252, 241, 0.1); }
+        h1 { color: #66fcf1; font-size: 2.5rem; margin-bottom: 10px; letter-spacing: 1px; }
+        .subtitle { color: #45f3ff; font-weight: bold; font-size: 1.1rem; margin-bottom: 30px; text-transform: uppercase; }
+        p { margin-bottom: 20px; font-size: 1.05rem; }
+        .url-box { background: #0b0c10; border: 1px solid #45f2ff; padding: 14px; border-radius: 6px; font-family: "Courier New", Courier, monospace; font-size: 1.1rem; color: #66fcf1; display: block; width: 100%; margin: 20px 0; font-weight: bold; cursor: pointer; transition: all 0.2s; }
+        .url-box:hover { background: #151a22; }
+        .btn { display: inline-block; background: #45f3ff; color: #0b0c10; padding: 16px 32px; font-weight: bold; text-decoration: none; border-radius: 6px; font-size: 1.1rem; transition: background 0.2s, transform 0.1s; box-shadow: 0 4px 15px rgba(69, 243, 255, 0.3); }
+        .btn:hover { background: #66fcf1; transform: translateY(-2px); }
+        .btn:active { transform: translateY(0); }
+        .notice { margin-top: 40px; font-size: 0.85rem; color: #888; border-top: 1px solid #2f3b4c; padding-top: 20px; text-align: left; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>🏎️ RUSHED ENGINE</h1>
+        <div class="subtitle">High-Velocity Horizontal Left-Line Playfield</div>
+        
+        <p>Welcome to the official repository landing hub. This page serves dynamic configurations directly to your mobile layout.</p>
+        
+        <p>To connect manually, copy the endpoint link address below and insert it into your client configurations container:</p>
+        <input type="text" class="url-box" id="serverUrl" readonly>
+        
+        <a id="deepLink" href="#" class="btn">🚀 Connect to Server Instantly</a>
+
+        <div class="notice">
+            <strong>Legal Disclaimer & Safety Policy:</strong><br>
+            Rushed Engine is an independent, non-commercial fan-made framework built exclusively for runtime processing evaluations within the Sonolus application layout. This portal handles data configuration layers passively and does not host copyrighted tracking files or licensed media blocks. All brand elements belong to their respective copyright holders.
+        </div>
+    </div>
+
+    <script>
+        // 1. AUTOMATIC URL RESOLVER ENGINE
+        // Dynamically detects where you uploaded this file and formats the connection URLs automatically.
+        const currentDomain = window.location.origin + window.location.pathname.replace('index.html', '');
+        const cleanDomain = currentDomain.replace(/\/$/, ""); // Strip trailing slash
+        
+        document.getElementById('serverUrl').value = cleanDomain;
+        document.getElementById('deepLink').href = "sonolus://" + cleanDomain.replace(/^https?:\/\//, "");
+
+        // 2. EMBEDDED PASSIVE SONOLUS API SYSTEM
+        // Intercepts connection requests sent by the Sonolus app and feeds it engine configurations.
+        const path = window.location.pathname;
+        
+        // Setup payload definitions 
+        const serverInfoPayload = {
+            "title": "Rushed Server",
+            "description": "Custom Horizontal Left-Line Engine",
+            "banner": { "url": "" },
+            "levels": { "items": [], "search": { "options": [] } },
+            "skins": { "items": [], "search": { "options": [] } },
+            "backgrounds": { "items": [], "search": { "options": [] } },
+            "effects": { "items": [], "search": { "options": [] } },
+            "particles": { "items": [], "search": { "options": [] } },
+            "engines": { "items": [], "search": { "options": [] } }
+        };
+
+        const levelListPayload = {
+            "pageCount": 1,
+            "items": [
+                {
+                    "name": "project-rusher-custom-rushed",
+                    "rating": 34,
+                    "engine": { "name": "rushed-engine" },
+                    "title": "Rushed",
+                    "artists": "Project: RUSHER Custom",
+                    "author": "YourName",
+                    "description": "Custom high-velocity chart deployment.",
+                    "cover": { "url": cleanDomain + "/assets/cover.png" },
+                    "bgm": { "url": cleanDomain + "/assets/rushed.mp3" },
+                    "data": { "url": cleanDomain + "/assets/rushed.gz" }
+                }
+            ]
+        };
+
+        // Execution router to capture app tracking hooks
+        if (path.endsWith('/sonolus/info') || window.location.search === '?sonolus=info') {
+            document.body.innerHTML = JSON.stringify(serverInfoPayload);
+            document.body.style.fontFamily = 'monospace';
+            document.body.style.whiteSpace = 'pre';
+        } else if (path.endsWith('/sonolus/levels/list') || window.location.search === '?sonolus=levels') {
+            document.body.innerHTML = JSON.stringify(levelListPayload);
+            document.body.style.fontFamily = 'monospace';
+            document.body.style.whiteSpace = 'pre';
+        }
+    </script>
+</body>
+</html>
