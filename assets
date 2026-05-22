@@ -1,0 +1,6 @@
+rushed-server/
+├── index.html
+└── assets/
+    ├── cover.png
+    ├── rushed.mp3
+    └── rushed.gz
