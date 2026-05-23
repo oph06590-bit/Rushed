@@ -1,0 +1,11 @@
+{
+  "title": "Rushed Engine",
+  "description": "Horizontal Left-Line Playfield Network",
+  "banner": { "url": "" },
+  "levels": { "items": [], "search": { "options": [] } },
+  "skins": { "items": [], "search": { "options": [] } },
+  "backgrounds": { "items": [], "search": { "options": [] } },
+  "effects": { "items": [], "search": { "options": [] } },
+  "particles": { "items": [], "search": { "options": [] } },
+  "engines": { "items": [], "search": { "options": [] } }
+}
