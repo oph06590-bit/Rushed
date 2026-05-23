@@ -1,0 +1,17 @@
+{
+  "pageCount": 1,
+  "items": [
+    {
+      "name": "project-rusher-custom-rushed",
+      "rating": 1
+      "engine": { "name": "rushed-engine" },
+      "title": "Rushed Community Map",
+      "artists": "Project: RUSHER",
+      "author": "YourName",
+      "description": "Custom playfield node.",
+      "cover": cover1.png
+      "bgm": song1.mp3
+      "data": chart1.gz
+    }
+  ]
+}
