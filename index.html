@@ -1,216 +1,203 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🏎️ Rushed Engine Server Portal</title>
+    <title>🏎️ Rushed Portal & Visual Mapping Tool</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #0b0c10; color: #c5c6c7; line-height: 1.6; padding: 40px 20px; text-align: center; }
-        .container { max-width: 700px; margin: 0 auto; background: #1f2833; padding: 40px; border-radius: 12px; border: 2px solid #66fcf1; box-shadow: 0 8px 30px rgba(0, 252, 241, 0.1); }
-        h1 { color: #66fcf1; font-size: 2.5rem; margin-bottom: 10px; letter-spacing: 1px; }
-        .subtitle { color: #45f3ff; font-weight: bold; font-size: 1.1rem; margin-bottom: 30px; text-transform: uppercase; }
-        p { margin-bottom: 20px; font-size: 1.05rem; }
-        .url-box { background: #0b0c10; border: 1px solid #45f2ff; padding: 14px; border-radius: 6px; font-family: "Courier New", Courier, monospace; font-size: 1.1rem; color: #66fcf1; display: block; width: 100%; margin: 20px 0; font-weight: bold; text-align: center; }
-        .btn { display: inline-block; background: #45f3ff; color: #0b0c10; padding: 16px 32px; font-weight: bold; text-decoration: none; border-radius: 6px; font-size: 1.1rem; margin: 10px; transition: background 0.2s, transform 0.1s; box-shadow: 0 4px 15px rgba(69, 243, 255, 0.3); }
-        .btn.download-btn { background: #ffaa00; box-shadow: 0 4px 15px rgba(255, 170, 0, 0.3); }
-        .notice { margin-top: 40px; font-size: 0.85rem; color: #888; border-top: 1px solid #2f3b4c; padding-top: 20px; text-align: left; }
-    </style>
-</head>
-<body>
-
-    <div class="container">
-        <h1>🏎️ RUSHED ENGINE</h1>
-        <div class="subtitle">High-Velocity Horizontal Left-Line Playfield</div>
-        <p>Welcome to the official repository landing hub.</p>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #07090e; color: #e1e1e6; line-height: 1.6; padding: 20px 10px; text-align: center; }
         
-        <button onclick="downloadChart()" class="btn download-btn">📥 Step 1: Download rushed.gz File</button>
-        <br>
-        <a id="deepLink" href="#" class="btn">🚀 Step 2: Connect to Sonolus App</a>
-
-        <p style="margin-top:20px;">Manual Connection URL:</p>
-        <input type="text" class="url-box" id="serverUrl" readonly>
-    </div>
-
-    <script>
-        // Forces the app to ignore the trailing dot when routing files
-        const cleanDomain = "https://github.io.";
+        /* HEADER BAR MATCHING THE STYLE */
+        .top-header { background: linear-gradient(135deg, #101424, #1a223f); color: #45f3ff; padding: 18px; font-weight: bold; font-size: 1.8rem; letter-spacing: 1px; margin-bottom: 25px; border-radius: 8px; border: 1px solid #45f3ff; text-transform: uppercase; text-shadow: 0 0 10px rgba(69,243,255,0.5); }
         
-        document.getElementById('serverUrl').value = cleanDomain;
-        document.getElementById('deepLink').href = "sonolus://user-bit.github.io/Rushed.";
+        .container { max-width: 750px; margin: 0 auto; }
 
-        function downloadChart() {
-            const base64Gzip = "H4sIAAAAAAAAA31Tyw7CMAw7VyF97pREtBiddPIBiEORA5pAJVCNhvDutY0DHyAkiR3bSezE9idKcyBfQLWzB10IJILeRylySFIbpEJ5UcegBwJyaaFeoasGIbQcpXpDVd09ORShGbygMYPshunOUIwKFuEImESNmsvyXZOHWpKXKw97TIaCmrU3SyuNhwZCH8v9GscbVLmkVQrS+UFCmS/YMiKwtmK6vGKeL4wFPLWeL6H0Qwsz0xVme9Cpbvjm5mX2YZEwiMVoKpMcR7gCnY7w9f3H43N8mP1YJDREuCyhGfE6O0zS9fED656bE0wDAAA=";
-            const binaryString = atob(base64Gzip);
-            const len = binaryString.length;
-            const bytes = new Uint8Array(len);
-            for (let i = 0; i < len; i++) { bytes[i] = binaryString.charCodeAt(i); }
-            const blob = new Blob([bytes], {type: "application/gzip"});
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = "rushed.gz";
-            link.click();
-        }
+        /* THE 3x3 MENU CARD GRID */
+        .sonolus-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 30px; }
+        .grid-card { background: #121622; border: 1px solid #232d42; padding: 20px 10px; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; color: #a4a7ab; font-weight: bold; font-size: 1.05rem; transition: all 0.2s ease; }
+        .grid-card:hover { background: #171d2d; border-color: #45f3ff; color: #45f3ff; transform: translateY(-2px); box-shadow: 0 4px 15px rgba(69,243,255,0.1); }
+        .grid-card svg { width: 45px; height: 45px; fill: currentColor; margin-bottom: 12px; }
 
-        // Checks if the incoming request is coming from your iPad's Sonolus App
-        const currentPath = window.location.pathname.toLowerCase();
-        const currentSearch = window.location.search.toLowerCase();
-
-        if (currentPath.includes('/sonolus/info') || currentSearch === '?sonolus=info') {
-            document.body.innerHTML = JSON.stringify({"title": "Rushed Server","description": "Custom Horizontal Engine","banner": {"url": ""},"levels": {"items": [],"search": {"options": []}},"skins": {"items": [],"search": {"options": []}},"backgrounds": {"items": [],"search": {"options": []}},"effects": {"items": [],"search": {"options": []}},"particles": {"items": [],"search": {"options": []}},"engines": {"items": [],"search": {"options": []}}});
-            document.body.style.fontFamily = 'monospace'; document.body.style.whiteSpace = 'pre'; document.body.style.background = '#fff'; document.body.style.color = '#000';
-        } else if (currentPath.includes('/sonolus/levels/list') || currentSearch === '?sonolus=levels') {
-            document.body.innerHTML = JSON.stringify({"pageCount": 1,"items": [{"name": "project-rusher-custom-rushed","rating": 34,"engine": {"name": "rushed-engine"},"title": "Rushed","artists": "Project: RUSHER Custom","author": "YourName","description": "Custom level.","cover": {"url": cleanDomain + "/assets/cover.png"},"bgm": {"url": cleanDomain + "/assets/rushed.mp3"},"data": {"url": cleanDomain + "/assets/rushed.gz"}}]});
-            document.body.style.fontFamily = 'monospace'; document.body.style.whiteSpace = 'pre'; document.body.style.background = '#fff'; document.body.style.color = '#000';
-        }
-    </script>
-</body>
-</html>
-{
-  "pageCount": 1,
-  "items": [
-    {
-      "name": "rushed-mp3-track-1",
-      "rating": 20,
-      "engine": { "name": "rushed-engine" },
-      "title": "Rushed Anthem",
-      "artists": "Project: RUSHER",
-      "author": "YourName",
-      "description": "Song 1 Local MP3 Audio Node.",
-      "cover": { "url": "https://github.io" },
-      "bgm": { "url": "https://github.io" },
-      "data": { "url": "https://github.io" }
-    },
-    {
-      "name": "rushed-mp3-track-2",
-      "rating": 28,
-      "engine": { "name": "rushed-engine" },
-      "title": "Velocity Rush",
-      "artists": "Project: RUSHER",
-      "author": "YourName",
-      "description": "Song 2 Local MP3 Audio Node.",
-      "cover": { "url": "https://github.io" },
-      "bgm": { "url": "https://github.io" },
-      "data": { "url": "https://github.io" }
-    },
-    {
-      "name": "rushed-mp3-track-3",
-      "rating": 36,
-      "engine": { "name": "rushed-engine" },
-      "title": "Left Line Overdrive",
-      "artists": "Project: RUSHER",
-      "author": "YourName",
-      "description": "Song 3 Local MP3 Audio Node.",
-      "cover": { "url": "https://github.io" },
-      "bgm": { "url": "https://github.io" },
-      "data": { "url": "https://github.io" }
-    },
-    {
-      "name": "rushed-mp3-track-4",
-      "rating": 45,
-      "engine": { "name": "rushed-engine" },
-      "title": "Chaotic Horizon",
-      "artists": "Project: RUSHER",
-      "author": "YourName",
-      "description": "Song 4 Local MP3 Audio Node.",
-      "cover": { "url": "https://github.io" },
-      "bgm": { "url": "https://github.io" },
-      "data": { "url": "https://github.io" }
-    }
-  ]
-}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🏎️ Rushed Hub & Chart Maker</title>
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #0b0c10; color: #c5c6c7; line-height: 1.6; padding: 30px 15px; text-align: center; }
-        .container { max-width: 650px; margin: 0 auto; background: #1f2833; padding: 30px; border-radius: 12px; border: 2px solid #66fcf1; box-shadow: 0 8px 30px rgba(0, 252, 241, 0.15); }
-        h1 { color: #66fcf1; font-size: 2.2rem; margin-bottom: 5px; }
-        .subtitle { color: #45f3ff; font-weight: bold; font-size: 0.95rem; margin-bottom: 25px; text-transform: uppercase; letter-spacing: 1px; }
-        p { margin-bottom: 15px; font-size: 1rem; color: #a4a7ab; }
-        .form-group { text-align: left; margin-bottom: 20px; }
-        label { display: block; color: #66fcf1; font-weight: bold; margin-bottom: 5px; font-size: 0.9rem; }
-        input, textarea { width: 100%; background: #0b0c10; border: 1px solid #45f2ff; padding: 12px; border-radius: 6px; font-size: 1rem; color: #fff; }
-        textarea { font-family: monospace; height: 140px; resize: none; }
-        .btn { display: inline-block; width: 100%; background: #45f3ff; color: #0b0c10; padding: 15px; font-weight: bold; text-decoration: none; border-radius: 6px; font-size: 1.1rem; border: none; cursor: pointer; margin-top: 10px; box-shadow: 0 4px 15px rgba(69, 243, 255, 0.3); transition: background 0.2s; }
+        /* PARAMETERS CARD PANEL */
+        .panel { background: #121622; padding: 20px; border-radius: 8px; margin-bottom: 25px; border: 1px solid #232d42; text-align: left; }
+        .panel h3 { color: #45f3ff; margin-bottom: 10px; font-size: 1.3rem; text-shadow: 0 0 5px rgba(69,243,255,0.3); }
+        .url-box { background: #07090e; border: 1px solid #232d42; padding: 12px; border-radius: 6px; font-family: monospace; font-size: 1rem; color: #50fa7b; display: block; width: 100%; margin: 10px 0; text-align: center; }
+        .btn { display: inline-block; width: 100%; background: #45f3ff; color: #07090e; padding: 14px; font-weight: bold; text-decoration: none; border-radius: 6px; font-size: 1.1rem; border: none; cursor: pointer; text-align: center; font-weight: bold; box-shadow: 0 4px 12px rgba(69, 243, 255, 0.2); }
         .btn:hover { background: #66fcf1; }
-        .btn.app-btn { background: #ff79c6; color: #fff; box-shadow: 0 4px 15px rgba(255, 121, 198, 0.3); margin-bottom: 30px; }
-        .btn.app-btn:hover { background: #ff92df; }
-        .template-box { background: #151a22; padding: 15px; border-radius: 6px; margin-top: 20px; border: 1px dashed #444; text-align: left; }
-        .code-snippet { background: #0b0c10; padding: 10px; border-radius: 4px; font-family: monospace; font-size: 0.85rem; color: #50fa7b; overflow-x: auto; white-space: pre-wrap; margin-top: 5px; user-select: all; }
-        hr { border: 0; height: 1px; background: #2f3b4c; margin: 30px 0; }
+
+        /* TIMELINE MAKER PLACEMENT CANVAS CONTAINER */
+        .editor-workspace { background: #121622; border-radius: 8px; padding: 20px; border: 1px solid #232d42; margin-top: 25px; }
+        .control-row { display: flex; gap: 10px; margin-bottom: 15px; width: 100%; }
+        .control-group { display: flex; flex-direction: column; flex: 1; text-align: left; }
+        .control-group label { font-weight: bold; font-size: 0.85rem; color: #45f3ff; margin-bottom: 5px; }
+        input, select { background: #07090e; border: 1px solid #232d42; padding: 10px; border-radius: 6px; color: #fff; font-size: 0.95rem; width: 100%; }
+        input:focus, select:focus { border-color: #45f3ff; outline: none; }
+        canvas { background: #07090e; cursor: crosshair; display: block; margin: 15px auto; border-radius: 6px; border: 1px solid #232d42; box-shadow: 0 6px 20px rgba(0,0,0,0.5); }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>🏎️ RUSHED CENTRAL HUB</h1>
-        <div class="subtitle">Server Portal & Chart Compiler</div>
-        
-        <p>Connect your iPad directly to the server app pool, or use the tool below to compile charts locally.</p>
+        <div class="top-header">Project: RUSHER Studio</div>
 
-        <!-- SONOLUS CONNECT BUTTON -->
-        <a id="deepLink" href="#" class="btn app-btn">🚀 Connect Server to Sonolus App</a>
-        
-        <p style="font-size: 0.9rem;">Manual Server URL:</p>
-        <input type="text" id="serverUrl" style="text-align:center; margin-bottom: 20px;" readonly>
-
-        <hr>
-
-        <!-- CHART MAKER TOOL -->
-        <h2 style="color:#66fcf1; margin-bottom:15px; font-size:1.5rem;">🛠️ Chart Maker Tool</h2>
-        <div class="form-group">
-            <label>Paste Your Chart Notes Code Block (JSON)</label>
-            <textarea id="chartData"></textarea>
+        <!-- 3x3 MENU LAYOUT GRID -->
+        <div class="sonolus-grid">
+            <a href="#" class="grid-card">
+                <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+                <span>Posts</span>
+            </a>
+            <a href="#" class="grid-card">
+                <svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/></svg>
+                <span>Playlists</span>
+            </a>
+            <a href="#" class="grid-card">
+                <svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+                <span>Levels</span>
+            </a>
+            <a href="#" class="grid-card">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 12 12 12 12-4.48 12-12S17.52 2 12 2zm0 13c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"/></svg>
+                <span>Skins</span>
+            </a>
+            <a href="#" class="grid-card">
+                <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5.5 9L11 14.5 8.5 11.5 5 16h14l-4.5-5z"/></svg>
+                <span>Backgrounds</span>
+            </a>
+            <a href="#" class="grid-card">
+                <svg viewBox="0 0 24 24"><path d="M12 22c5.52 0 10-2.24 10-5V7c0-2.76-4.48-5-10-5S2 4.24 2 7v10c0 2.76 4.48 5 10 5zm0-18c4.42 0 8 1.34 8 3s-3.58 3-8 3-8-1.34-8-3 3.58-3 8-3z"/></svg>
+                <span>SFX</span>
+            </a>
+            <a href="#" class="grid-card">
+                <svg viewBox="0 0 24 24"><path d="M7 2v11h10V2H7zm5 9c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"/></svg>
+                <span>Particles</span>
+            </a>
+            <a href="#" class="grid-card">
+                <svg viewBox="0 0 24 24"><path d="M12 2.22l-1.35 1.35c.75.29 1.35.9 1.64 1.64L13.64 3.9 12 2.22zM9 4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h6c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2H9z"/></svg>
+                <span>Engines</span>
+            </a>
+            <a href="#" class="grid-card">
+                <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+                <span>Configuration</span>
+            </a>
         </div>
 
-        <button onclick="compileAndDownload()" class="btn">📥 Compile & Download rushed.gz</button>
+        <!-- APP CONNECTOR PANEL -->
+        <div class="panel">
+            <h3>🔗 Connect to Sonolus</h3>
+            <input type="text" class="url-box" id="serverUrl" readonly>
+            <a id="deepLink" href="#" class="btn">🚀 Open in Sonolus App</a>
+        </div>
 
-        <div class="template-box">
-            <label style="color:#ff79c6;">💡 Example Note Pattern:</label>
-            <div class="code-snippet" id="sampleCode">{"version": 1, "bgmOffset": 0.0, "entities": [{"archetype": 0, "data": [{"name": "beat", "value": 0}, {"name": "bpm", "value": 150}]}, {"archetype": 1, "data": []}, {"archetype": 2, "data": [{"name": "targetBeat", "value": 1.0}, {"name": "laneIndex", "value": 0}, {"name": "laneHeight", "value": 0.25}]}, {"archetype": 3, "data": [{"name": "targetBeat", "value": 2.0}, {"name": "laneIndex", "value": 1}, {"name": "laneHeight", "value": 0.25}]}]}</div>
+        <!-- VISUAL CAPSULE EDITOR CANVAS BOX -->
+        <div class="editor-workspace">
+            <h3 style="color:#45f3ff; margin-bottom:15px; font-size:1.4rem; text-align:left;">🛠️ Horizontal Note Builder Grid</h3>
+            <div class="control-row">
+                <div class="control-group">
+                    <label>BPM Speed</label>
+                    <input type="number" id="bpmRate" value="150">
+                </div>
+                <div class="control-group">
+                    <label>Placement Note Type</label>
+                    <select id="noteTypeSelector">
+                        <option value="2">🔵 Blue Horizontal Tap Slider</option>
+                        <option value="3">💗 Pink Horizontal Flick Slider</option>
+                    </select>
+                </div>
+            </div>
+            
+            <canvas id="editorGrid" width="400" height="480"></canvas>
+            <button onclick="compileVisualChart()" class="btn" style="background:#45f3ff; color:#07090e; margin-top:10px;">⚡ Compile Visual Level Notes</button>
+            <textarea id="shareLinkResult" style="margin-top:15px; font-family:monospace; font-size:0.85rem; height:80px; display:none; width:100%; background:#07090e; border:1px solid #45f3ff; color:#50fa7b; padding:10px; border-radius:6px;" readonly></textarea>
         </div>
     </div>
 
+    <!-- Pako compiler frame for handling compression routines -->
     <script src="https://cloudflare.com"></script>
     <script>
-        // Automatic link routing setup
+        const canvas = document.getElementById('editorGrid');
+        const ctx = canvas.getContext('2d');
+        const numLanes = 3, totalBeats = 12;
+        const laneWidth = canvas.width / numLanes, beatHeight = canvas.height / totalBeats;
+        let notesArray = [];
+
         const cleanDomain = "https://github.io";
         document.getElementById('serverUrl').value = cleanDomain;
         document.getElementById('deepLink').href = "sonolus://user-bit.github.io/rushed-server";
-        document.getElementById('chartData').value = document.getElementById('sampleCode').innerText;
 
-        function compileAndDownload() {
-            const rawInput = document.getElementById('chartData').value.trim();
-            if(!rawInput) return;
-            try {
-                JSON.parse(rawInput);
-                const binaryData = pako.gzip(rawInput);
-                const blob = new Blob([binaryData], { type: "application/gzip" });
-                const link = document.createElement('a');
-                link.href = URL.createObjectURL(blob);
-                link.download = "rushed.gz";
-                link.click();
-            } catch(e) { alert("Invalid chart text format!"); }
-        }
+        // DRAWING ENGINE CONFIGURING THE ROBLOX PROJECT RUSHER LOOK
+        function drawEditorGrid() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw background grid tracking bars
+            ctx.strokeStyle = '#161f30'; ctx.lineWidth = 1;
+            for (let i = 1; i < numLanes; i++) { ctx.beginPath(); ctx.moveTo(i * laneWidth, 0); ctx.lineTo(i * laneWidth, canvas.height); ctx.stroke(); }
+            for (let j = 0; j <= totalBeats; j++) { ctx.beginPath(); ctx.moveTo(0, j * beatHeight); ctx.lineTo(canvas.width, j * beatHeight); ctx.stroke(); }
 
-        // HIDDEN APP LAYER - Stops Sonolus app errors instantly
-        const currentPath = window.location.pathname.toLowerCase();
-        const currentSearch = window.location.search.toLowerCase();
+            // DRAW WHITE LEFT VERTICAL JUDGMENT BAR (Matching your image)
+            ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 6;
+            ctx.beginPath(); ctx.moveTo(40, 0); ctx.lineTo(40, canvas.height); ctx.stroke();
 
-        if (currentPath.includes('/sonolus/info') || currentSearch === '?sonolus=info') {
-            document.body.innerHTML = JSON.stringify({"title": "Rushed Engine","description": "Horizontal Engine Hub","banner": {"url": ""},"levels": {"items": [],"search": {"options": []}},"skins": {"items": [],"search": {"options": []}},"backgrounds": {"items": [],"search": {"options": []}},"effects": {"items": [],"search": {"options": []}},"particles": {"items": [],"search": {"options": []}},"engines": {"items": [],"search": {"options": []}}});
-            document.body.style.fontFamily = 'monospace'; document.body.style.whiteSpace = 'pre'; document.body.style.background = '#fff'; document.body.style.color = '#000';
-        } else if (currentPath.includes('/sonolus/levels/list') || currentSearch === '?sonolus=levels') {
-            document.body.innerHTML = JSON.stringify({"pageCount": 1,"items": [{"name": "project-rusher-custom-rushed","rating": 34,"engine": {"name": "rushed-engine"},"title": "Rushed Community Map","artists": "Project: RUSHER","author": "YourName","description": "Custom playfield node.","cover": {"url": cleanDomain + "/assets/cover1.png"},"bgm": {"url": "https://soundhelix.com"},"data": {"url": cleanDomain + "/assets/chart1.gz"}}]});
-            document.body.style.fontFamily = 'monospace'; document.body.style.whiteSpace = 'pre'; document.body.style.background = '#fff'; document.body.style.color = '#000';
-        }
-    </script>
-</body>
-</html>
+            // RENDER GLOWING CAPSULE HORIZONTAL SLIDERS
+            notesArray.forEach(note => {
+                const laneCenterY = canvas.height - ((note.beat) * beatHeight) - (beatHeight / 2);
+const sliderStartX = 40; // Starts right on the white judgment line
+const sliderWidth = 220; // Length of the horizontal note body bar
+// Color configuration matching the image nodes (Blue Tap or Pink Flick)
+const mainColor = note.type === 2 ? '#00bfff' : '#ff1493';
+// 1. Draw glowing background slider trail line path
+ctx.strokeStyle = mainColor;
+ctx.lineWidth = 26;
+ctx.lineCap = 'round';
+ctx.beginPath();
+ctx.moveTo(sliderStartX, laneCenterY);
+ctx.lineTo(sliderStartX + sliderWidth, laneCenterY);
+ctx.stroke();
+// 2. Draw inner clean solid color core line path
+ctx.strokeStyle = '#ffffff';
+ctx.lineWidth = 14;
+ctx.beginPath();
+ctx.moveTo(sliderStartX, laneCenterY);
+ctx.lineTo(sliderStartX + sliderWidth, laneCenterY);
+ctx.stroke();
+// 3. Draw the touch target sensor circle head (Right side of slider)
+ctx.fillStyle = mainColor;
+ctx.strokeStyle = '#ffffff';
+ctx.lineWidth = 3;
+ctx.beginPath();
+ctx.arc(sliderStartX + sliderWidth, laneCenterY, 18, 0, 2 * Math.PI);
+ctx.fill();
+ctx.stroke();
+// 4. Inner white center dot target sensor
+ctx.fillStyle = '#ffffff';
+ctx.beginPath();
+ctx.arc(sliderStartX + sliderWidth, laneCenterY, 6, 0, 2 * Math.PI);
+ctx.fill();
+});
+}
+// GRID PLACEMENT CLICK TRACKER
+canvas.addEventListener('click', function(event) {
+const rect = canvas.getBoundingClientRect();
+const clickX = event.clientX - rect.left, clickY = event.clientY - rect.top;
+const targetLaneIndex = Math.floor(clickX / laneWidth) - 1;
+const targetBeat = Math.floor((canvas.height - clickY) / beatHeight);
+const selectedType = parseInt(document.getElementById('noteTypeSelector').value);
+const existingIndex = notesArray.findIndex(n => n.beat === targetBeat && n.laneIndex === targetLaneIndex);
+if (existingIndex !== -1) { notesArray.splice(existingIndex, 1); }
+else { notesArray.push({ beat: targetBeat, laneIndex: targetLaneIndex, type: selectedType }); }
+drawEditorGrid();
+});
+// SHARING LINK CODE DATA PACKER
+function compileVisualChart() {
+const bpm = parseInt(document.getElementById('bpmRate').value);
+let chartPayload = { "version": 1, "bgmOffset": 0.0, "entities": [{ "archetype": 0, "data": [{ "name": "beat", "value": 0 }, { "name": "bpm", "value": bpm }] }, { "archetype": 1, "data": [] }] };
+notesArray.forEach(n => { chartPayload.entities.push({ "archetype": n.type, "data": [{ "name": "targetBeat", "value": n.beat + 1 }, { "name": "laneIndex", "value": n.laneIndex }, { "name": "laneHeight", "value": 0.25 }] }); });
+const compressedBin = pako.gzip(JSON.stringify(chartPayload));
+const base64String = btoa(String.fromCharCode.apply(null, compressedBin));
+const txtArea = document.getElementById('shareLinkResult');
+txtArea.value = "sonolus://user-bit.github.io/rushed-server?chart=" + base64String;
+txtArea.style.display = 'block';
 
+}
+drawEditorGrid();
 
