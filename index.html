@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🏎️ Rushed Hybrid Chart Studio</title>
+    <title>🏎️ Rushed Portal & Visual Mapping Tool</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #07090e; color: #e1e1e6; line-height: 1.6; padding: 20px 10px; text-align: center; }
         
+        /* ORIGINAL BRANDING HEADER CHASSIS */
         .top-header { background: linear-gradient(135deg, #101424, #1a223f); color: #45f3ff; padding: 18px; font-weight: bold; font-size: 1.8rem; letter-spacing: 1px; margin-bottom: 25px; border-radius: 8px; border: 1px solid #45f3ff; text-transform: uppercase; text-shadow: 0 0 10px rgba(69,243,255,0.5); }
         .container { max-width: 800px; margin: 0 auto; }
 
@@ -22,7 +23,6 @@
         .btn { display: inline-block; width: 100%; background: #45f3ff; color: #07090e; padding: 14px; font-weight: bold; text-decoration: none; border-radius: 6px; font-size: 1.1rem; border: none; cursor: pointer; text-align: center; box-shadow: 0 4px 12px rgba(69, 243, 255, 0.2); }
         .btn:hover { background: #66fcf1; }
 
-        /* VERTICAL WORKSPACE TIMELINE CONFIGURATION */
         .editor-workspace { background: #121622; border-radius: 8px; padding: 20px; border: 1px solid #232d42; margin-top: 25px; }
         .control-row { display: flex; gap: 10px; margin-bottom: 15px; width: 100%; }
         .control-group { display: flex; flex-direction: column; flex: 1; text-align: left; }
@@ -36,7 +36,8 @@
 <body>
 
     <div class="container">
-        <div class="top-header">Project: RUSHER Hybrid Studio</div>
+        <!-- PROJECT BRANDING RENAMED DIRECTLY TO RUSHED -->
+        <div class="top-header">Rushed Studio</div>
 
         <div class="sonolus-grid">
             <a href="#" class="grid-card">
@@ -94,7 +95,7 @@
                     <label>Active Mapping Tool</label>
                     <select id="noteTypeSelector">
                         <option value="2">🔘 Horizontal Tap Circle Target</option>
-                        <option value="4">⭐ Project Sekai Trace Star (Hold Path)</option>
+                        <option value="4">⭐ Custom Guided Star (Hold Track)</option>
                     </select>
                 </div>
             </div>
@@ -121,9 +122,12 @@
         let beatHeight = canvas.height / totalBeats;
         let notesArray = [];
 
-        const cleanDomain = "https://github.io";
+        // Automatic link routing system
+        const currentDomain = window.location.origin + window.location.pathname.replace('index.html', '');
+        const cleanDomain = currentDomain.replace(/\/\$/, ""); 
+        
         document.getElementById('serverUrl').value = cleanDomain;
-        document.getElementById('deepLink').href = "sonolus://user-bit.github.io/rushed-server";
+        document.getElementById('deepLink').href = "sonolus://" + cleanDomain.replace(/^https?:\/\//, "");
 
         function updateBpmScaling() {
             const bpm = parseInt(document.getElementById('bpmRate').value) || 150;
@@ -132,45 +136,40 @@
             drawEditorGrid();
         }
 
-        // VERTICAL EDITOR DRAWING LOOP (Matches your drawing template sketch)
         function drawEditorGrid() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             
-            // 1. Draw vertical lanes lines
             ctx.strokeStyle = '#161f30'; ctx.lineWidth = 1;
             for (let i = 0; i <= numLanes; i++) {
                 ctx.beginPath(); ctx.moveTo(i * laneWidth, 0); ctx.lineTo(i * laneWidth, canvas.height); ctx.stroke();
             }
 
-            // Draw horizontal rhythm lines
             for (let j = 0; j <= totalBeats; j++) {
                 ctx.beginPath(); ctx.moveTo(0, j * beatHeight); ctx.lineTo(playfieldWidth, j * beatHeight); ctx.stroke();
             }
 
-            // 2. VISUAL EDITOR BASE LINE (Judgment Line at bottom of grid)
             ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 4;
-ctx.beginPath(); ctx.moveTo(0, canvas.height - 20); ctx.lineTo(playfieldWidth, canvas.height - 20); ctx.stroke();
-// 3. RIGHT SIDE SCROLLBAR MONITOR TRACK (From your sketch drawing)
+            ctx.beginPath(); ctx.moveTo(0, canvas.height - 20); ctx.lineTo(playfieldWidth, canvas.height - 20); ctx.stroke();
+// SCROLLBAR TRACKBAR SYSTEM FROM SKETCHIMAGE
 const scrollX = 390;
-ctx.fillStyle = '#a4a7ab'; // Grey slider background container
+ctx.fillStyle = '#a4a7ab';
 ctx.beginPath(); ctx.roundRect(scrollX - 10, 20, 20, canvas.height - 40, 10); ctx.fill();
-ctx.fillStyle = '#000000'; ctx.strokeStyle = '#45f3ff'; ctx.lineWidth = 2; // Black scroll handle
+ctx.fillStyle = '#000000'; ctx.strokeStyle = '#45f3ff'; ctx.lineWidth = 2;
 ctx.beginPath(); ctx.roundRect(scrollX - 12, canvas.height / 2, 24, (canvas.height / 2) - 20, 12); ctx.fill(); ctx.stroke();
 ctx.fillStyle = '#45f3ff'; ctx.font = 'bold 12px sans-serif';
 ctx.fillText('Scroll', scrollX - 50, canvas.height / 2 - 10);
-// 4. NOTE PLACEMENT RENDERING LOOPS
 notesArray.forEach(note => {
 const x = (note.laneIndex * laneWidth) + (laneWidth / 2);
 const y = canvas.height - (note.beat * beatHeight) - 20;
 if (y < 0 || y > canvas.height) return;
 if (note.type === 4) {
 ctx.fillStyle = '#ffdf00'; ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2;
-drawStar(x, y, 5, 18, 8); // Yellow star node icon
+drawStar(x, y, 5, 18, 8);
 ctx.strokeStyle = 'rgba(255, 223, 0, 0.4)'; ctx.lineWidth = 14;
 ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x, y + beatHeight); ctx.stroke();
 } else {
 ctx.fillStyle = '#00bfff'; ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 3;
-ctx.beginPath(); ctx.arc(x, y, 16, 0, 2 * Math.PI); ctx.fill(); ctx.stroke(); // Blue circle node target sensor
+ctx.beginPath(); ctx.arc(x, y, 16, 0, 2 * Math.PI); ctx.fill(); ctx.stroke();
 ctx.fillStyle = '#ffffff';
 ctx.beginPath(); ctx.arc(x, y, 5, 0, 2 * Math.PI); ctx.fill();
 }
@@ -200,18 +199,15 @@ else { notesArray.push({ beat: targetBeat, laneIndex: targetLaneIndex, type: sel
 drawEditorGrid();
 }
 });
-// 🔄 THE HYBRID TRANSLATION DATA PACKER
-// Takes your vertical placements and rotates them 90° for horizontal left-line gameplay loop!
 function compileVisualChart() {
 const bpm = parseInt(document.getElementById('bpmRate').value) || 150;
 let chartPayload = { "version": 1, "bgmOffset": 0.0, "entities": [{ "archetype": 0, "data": [{ "name": "beat", "value": 0 }, { "name": "bpm", "value": bpm }] }, { "archetype": 1, "data": [] }] };
 notesArray.forEach(n => {
-// Inverts your grid math so notes rush leftward inside the Sonolus app
 chartPayload.entities.push({
 "archetype": n.type,
 "data": [
 { "name": "targetBeat", "value": n.beat },
-{ "name": "laneIndex", "value": n.laneIndex - 1 }, // Maps columns to horizontal stacked lanes
+{ "name": "laneIndex", "value": n.laneIndex - 1 },
 { "name": "laneHeight", "value": 0.25 }
 ]
 });
@@ -222,8 +218,6 @@ const txtArea = document.getElementById('shareLinkResult');
 const cleanAppDomain = cleanDomain.replace(/^https?:///, "");
 txtArea.value = "sonolus://" + cleanAppDomain + "?chart=" + base64String;
 txtArea.style.display = 'block';
-alert("Hybrid configuration compiled successfully!");
+alert("Rushed layout chart compiled successfully!");
 }
-updateBpmScaling();
 
-            
